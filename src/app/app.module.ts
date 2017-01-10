@@ -15,11 +15,13 @@ import { AppComponent } from './app.component';
 import { AppState, InternalStateType } from './app.service';
 import { LoginComponent } from './login';
 import { CoursesComponent } from './courses';
+import { CourseNewComponent } from './course-new';
+import { CourseEditComponent } from './course-edit';
 import { NoContentComponent } from './no-content';
-import { XLarge } from './home/x-large';
 
 // Application wide providers
 const APP_PROVIDERS = [
+  AppState
 ];
 
 type StoreType = {
@@ -36,8 +38,10 @@ type StoreType = {
   declarations: [
     AppComponent,
     CoursesComponent,
+    CourseNewComponent,
+    CourseEditComponent,
     LoginComponent,
-    NoContentComponent
+    NoContentComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

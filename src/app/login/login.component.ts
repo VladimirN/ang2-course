@@ -1,21 +1,38 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from './login.service';
+import { Credentials } from './credentials';
 
 @Component({
   selector: 'login',
-  providers: [
-  ],
-  // Our list of styles in our component. We may add more to compose many styles together
   styleUrls: [ './login.component.css' ],
-  // Every Angular template is first compiled by the browser before Angular runs it's compiler
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  providers: [LoginService]
 })
 export class LoginComponent {
-  constructor() {
+  private showWrongCredentialsAlert: boolean = false;
+  private credentials: Credentials = new Credentials();
 
+  constructor(private router: Router, private loginService: LoginService) {
   }
 
-  ngOnInit() {
-    console.log('hello `Home` component');
-    // this.title.getData().subscribe(data => this.data = data);
+  public ngOnInit() {
+    if (this.loginService.isLoggedIn()) {
+      this.router.navigate(['']);
+    }
+  }
+
+  public logIn(): void {
+    this.loginService
+    .login(this.credentials.login, this.credentials.password)
+    .subscribe(user => {
+      if (user) {
+        this.router.navigate(['']);
+      } else {
+        this.credentials.password = '';
+        this.credentials.login = '';
+        this.showWrongCredentialsAlert = true;
+      }
+    });
   }
 }
