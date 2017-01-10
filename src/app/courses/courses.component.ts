@@ -20,4 +20,12 @@ export class CoursesComponent {
   addCourse() {
     this.router.navigate(['./courses/new']);
   }
+
+  editCourse(id: number) {
+    this.router.navigate(['./courses/' + id]);
+  }
+
+  deleteCourse(id: number) {
+    this.courseService.deleteCourseItem(id);
+  }
 }

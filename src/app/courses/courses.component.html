@@ -15,8 +15,8 @@
             <div>{{item.createDate | date: 'MM.dd.yyyy'}}</div>
             <div>{{item.duration | timeStampPipe}}</div>
             <div>{{item.authors}}</div>
-            <a href="#/edit">Edit</a>
-            <button type="button" class="btn" (click)="delete()">Delete</button>
+            <button type="button" class="btn" (click)="editCourse(item.id)">Edit</button>
+            <button type="button" class="btn" (click)="deleteCourse(item.id)">Delete</button>
           </div>
         </div>
     </div>
