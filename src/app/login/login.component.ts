@@ -27,7 +27,7 @@ export class LoginComponent {
     .login(this.credentials.login, this.credentials.password)
     .subscribe(user => {
       if (user) {
-        this.router.navigate(['']);
+        this.router.navigate(['./courses']);
       } else {
         this.credentials.password = '';
         this.credentials.login = '';

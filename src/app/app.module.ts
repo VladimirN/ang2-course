@@ -18,6 +18,8 @@ import { CoursesComponent } from './courses';
 import { CourseNewComponent } from './course-new';
 import { CourseEditComponent } from './course-edit';
 import { NoContentComponent } from './no-content';
+import { TimeStampPipePipe } from './time-stamp.pipe';
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -42,7 +44,8 @@ type StoreType = {
     CourseEditComponent,
     LoginComponent,
     NoContentComponent,
-  ],
+    TimeStampPipePipe
+],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,

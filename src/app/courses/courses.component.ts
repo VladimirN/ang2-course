@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { CourseService, CourseItem } from './../services/course.service';
 
 @Component({
-  selector: 'about',
-  styles: [`
-  `],
-  template: `
-    <h1>Courses</h1>
-    <div>
-      List courses
-    </div>
-  `
+  selector: 'courses',
+  styles: [ './courses.component.css' ],
+  templateUrl: './courses.component.html',
+  providers: [CourseService]
 })
 export class CoursesComponent {
-  localState: any;
-  constructor(public route: ActivatedRoute) {
+  items: CourseItem[] = [];
+  constructor(private router: Router, private courseService: CourseService) {
+  }
 
+  ngOnInit() {
+    this.items = this.courseService.getCourseItems();
+  }
+
+  addCourse() {
+    this.router.navigate(['./courses/new']);
   }
 }

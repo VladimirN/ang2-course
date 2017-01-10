@@ -1,0 +1,23 @@
+<div>
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Courses</h2>
+
+        <div class="find">
+          <input type="text" [(ngModel)]="courseNameFilter"/>
+          <button class="btn" (click)="filter()">Filter</button>
+        </div>
+
+        <button class="btn btn-primary" (click)="addCourse()">Add</button>
+
+        <div class="items">
+          <div class="item" *ngFor="let item of items">
+            <div>{{item.name}}</div>
+            <div>{{item.createDate | date: 'MM.dd.yyyy'}}</div>
+            <div>{{item.duration | timeStampPipe}}</div>
+            <div>{{item.authors}}</div>
+            <a href="#/edit">Edit</a>
+            <button type="button" class="btn" (click)="delete()">Delete</button>
+          </div>
+        </div>
+    </div>
+</div>
