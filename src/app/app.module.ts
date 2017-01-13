@@ -20,10 +20,14 @@ import { CourseEditComponent } from './course-edit';
 import { NoContentComponent } from './no-content';
 import { TimeStampPipePipe } from './time-stamp.pipe';
 import { NameFilterPipe } from './pipes/name-filter.pipe';
+import { LoggedInGuard } from './login/logged-in.guard';
+import { LoginService } from './login/login.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
-  AppState
+  AppState,
+  LoginService,
+  LoggedInGuard
 ];
 
 type StoreType = {
