@@ -10,6 +10,8 @@ import { CourseService, CourseItem } from './../services/course.service';
 })
 export class CoursesComponent {
   items: CourseItem[] = [];
+  courseNameFilter: string = '';
+
   constructor(private router: Router, private courseService: CourseService) {
   }
 
@@ -27,5 +29,9 @@ export class CoursesComponent {
 
   deleteCourse(id: number) {
     this.courseService.deleteCourseItem(id);
+  }
+
+  filter(name: string) {
+    this.courseNameFilter = name;
   }
 }
