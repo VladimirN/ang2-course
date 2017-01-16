@@ -31,7 +31,5 @@ export class CoursesComponent {
     this.courseService.deleteCourseItem(id);
   }
 
-  filter(name: string) {
-    this.courseNameFilter = name;
-  }
+
 }

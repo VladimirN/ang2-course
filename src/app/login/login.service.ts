@@ -48,6 +48,10 @@ export class LoginService {
       return !!localStorage.getItem(this.AUTH_USER_KEY);
   }
 
+  public getUser(): string {
+      return localStorage.getItem(this.AUTH_USER_KEY);
+  }
+
   private checkCredential(login: string, password: string): boolean {
     return login === this.VALID_LOGIN && password === this.VALID_PASSWORD;
   }
