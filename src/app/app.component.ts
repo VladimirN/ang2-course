@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     './app.component.css'
   ],
   template: `
-    <div [hidden]="isHidden">
+    <div *ngIf="isHidden">
       {{userName}}
       <button type="button" class="btn" (click)="logout()">LogOut</button>
     </div>

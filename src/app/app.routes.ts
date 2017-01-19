@@ -1,8 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login';
 import { CoursesComponent } from './courses';
-import { CourseNewComponent } from './course-new';
-import { CourseEditComponent } from './course-edit';
+import { CourseDetailComponent } from './course-detail';
 
 import { DataResolver } from './app.resolver';
 
@@ -13,7 +12,6 @@ export const ROUTES: Routes = [
   { path: '',      component: CoursesComponent, canActivate: [LoggedInGuard] },
   { path: 'login',  component: LoginComponent },
   { path: 'courses', component: CoursesComponent, canActivate: [LoggedInGuard] },
-  { path: 'courses/new', component: CourseNewComponent, canActivate: [LoggedInGuard] },
-  { path: 'courses/:id', component: CourseEditComponent, canActivate: [LoggedInGuard] },
+  { path: 'courses/:id', component: CourseDetailComponent, canActivate: [LoggedInGuard] },
   { path: '**',    component: CoursesComponent, canActivate: [LoggedInGuard] },
 ];

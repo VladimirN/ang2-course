@@ -15,18 +15,25 @@ import { AppComponent } from './app.component';
 import { AppState, InternalStateType } from './app.service';
 import { LoginComponent } from './login';
 import { CoursesComponent } from './courses';
-import { CourseNewComponent } from './course-new';
-import { CourseEditComponent } from './course-edit';
+import { CourseDetailComponent } from './course-detail';
 import { NoContentComponent } from './no-content';
 import { TimeStampPipePipe } from './time-stamp.pipe';
 import { NameFilterPipe } from './pipes/name-filter.pipe';
 import { LoggedInGuard } from './login/logged-in.guard';
 import { LoginService } from './login/login.service';
+import { CourseService } from './Services/course.service';
+
+import { StoreModule } from '@ngrx/store';
+import { DBModule } from '@ngrx/db';
+
+// import { reducer } from './reducers';
+import { schema } from './db';
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
   LoginService,
+  CourseService,
   LoggedInGuard
 ];
 
@@ -44,8 +51,7 @@ type StoreType = {
   declarations: [
     AppComponent,
     CoursesComponent,
-    CourseNewComponent,
-    CourseEditComponent,
+    CourseDetailComponent,
     LoginComponent,
     NoContentComponent,
     TimeStampPipePipe,
@@ -55,7 +61,9 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    // StoreModule.provideStore(reducer),
+    DBModule.provideDB(schema),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
