@@ -1,0 +1,5 @@
+ <ul class="error-summary" *ngIf="errors?.length">
+           <li *ngFor="let error of errors">
+                <b>{{error.controlName}}</b>: <i>{{error.errorText}}</i>
+           </li>
+</ul>

@@ -1,6 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
@@ -22,6 +22,7 @@ import { NameFilterPipe } from './pipes/name-filter.pipe';
 import { LoggedInGuard } from './login/logged-in.guard';
 import { LoginService } from './login/login.service';
 import { CourseService } from './Services/course.service';
+import { ErrorSummaryComponent } from './components/error-summary/error-summary.component';
 
 import { StoreModule } from '@ngrx/store';
 import { DBModule } from '@ngrx/db';
@@ -55,11 +56,13 @@ type StoreType = {
     LoginComponent,
     NoContentComponent,
     TimeStampPipePipe,
-    NameFilterPipe
+    NameFilterPipe,
+    ErrorSummaryComponent
 ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     // StoreModule.provideStore(reducer),

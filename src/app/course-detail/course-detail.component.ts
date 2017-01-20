@@ -1,32 +1,38 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { CourseService, CourseItem } from './../services/course.service';
+import { ErrorSummaryComponent, SummaryError } from './../components/error-summary';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'course-detail',
   styles: [`
   `],
-  providers: [CourseService],
+  providers: [CourseService, DatePipe],
   template: `
     <h1>Create or Edit Course </h1>
-    <form novalidate *ngIf="item">
+
+    <error-summary [errors]="formErrors"></error-summary>
+
+    <form novalidate *ngIf="item" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
       <div>
         <label> Title </label>
-        <input type="text" name="name" [(ngModel)]="item.name" required />
+        <input type="text" name="name" formControlName="name" required />
       </div>
       <div>
         <label> Description </label>
-        <input type="text" name="description" [(ngModel)]="item.description" required />
+        <input type="text" name="description" formControlName="description" required />
       </div>
       <div>
         <label> Date </label>
-        <input type="text" name="createDate" [(ngModel)]="item.createDate" required />
+        <input type="text" name="createDate" formControlName="createDate" required />
       </div>
       <div>
         <label> Duration </label>
-        <input type="text" name="duration" [(ngModel)]="item.duration" required />
-        <label>{{item.duration | timeStampPipe}}</label>
+        <input type="number" #duratoinInput name="duration" formControlName="duration" required />
+        <label>{{ duratoinInput.value | timeStampPipe }}</label>
       </div>
       <div>
         <label> Authors </label>
@@ -47,7 +53,7 @@ import { Subscription } from 'rxjs';
       </div>
 
       <button type="submit">Save </button>
-      <button (click)="back()">Cancel </button>
+      <button (click)="back($event)">Cancel </button>
 
     </form>
   `
@@ -58,13 +64,19 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       'Miller', 'Brow', 'Smith', 'Johnson', 'Williams'
     ];
   sub: Subscription;
+  courseForm: FormGroup;
+  formErrors: any;
 
   constructor(private courseService: CourseService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private datePipe: DatePipe) {
   }
 
   ngOnInit(){
+    this.courseForm = this.fb.group({});
+
     this.sub = this.route.params
       .subscribe(params => {
           if (params['id'] === 'new')
@@ -76,6 +88,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
             let itemId = +params['id'];
             this.item = this.courseService.getCourseItem(itemId);
           }
+          this.initializeForm();
         }
       );
   }
@@ -83,4 +96,77 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.sub.unsubscribe();
   }
+
+  initializeForm(){
+    let self = this;
+
+    this.courseForm = this.fb.group({
+            'id': [
+                this.item.id
+            ],
+            'name': [
+                this.item.name,
+                [
+                    Validators.required
+                ]
+            ],
+            'createDate': [
+                this.datePipe.transform(this.item.createDate, 'dd.MM.yyyy'),
+                [
+                    Validators.required,
+                    Validators.pattern('\\d\\d.\\d\\d.\\d\\d\\d\\d')
+                ]
+            ],
+            'description': [
+                this.item.description,
+                [
+                    Validators.required
+                ],
+            ],
+            'duration': [
+                this.item.duration,
+                [
+                    Validators.required,
+                    Validators.pattern('[0-9]+')
+                ]
+            ]
+        });
+  }
+
+  back($event){
+    this.gotoList();
+    $event.preventDefault();
+  }
+
+  gotoList() {
+      this.router.navigate(['./courses']);
+  }
+
+  onSubmit() {
+      this.formErrors = [];
+
+      if (this.courseForm.valid) {
+          let item = Object.assign({}, this.item, this.courseForm.value);
+          this.courseService.updateItem(item);
+          this.gotoList();
+      }
+      else {
+          this.showErrorSummary();
+      }
+
+      return false;
+  }
+
+  showErrorSummary() {
+      // tslint:disable-next-line:forin
+      for (let ctrlName in this.courseForm.controls) {
+          let ctrl = this.courseForm.controls[ctrlName];
+          if (ctrl.errors) {
+              this.formErrors.push(new SummaryError(
+                  ctrlName,
+                  JSON.stringify(ctrl.errors)
+              ));
+          }
+      }
+    }
 }
