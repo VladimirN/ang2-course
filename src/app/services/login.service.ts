@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subscriber } from 'rxjs/Subscriber';
 
-import { User } from './user';
+import { User } from './../models/user';
 
 export class LoginService {
   private AUTH_USER_KEY: string = 'auth_user';

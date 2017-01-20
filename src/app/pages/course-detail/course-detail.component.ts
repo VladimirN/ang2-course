@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { CourseService, CourseItem } from './../services/course.service';
-import { ErrorSummaryComponent, SummaryError } from './../components/error-summary';
+import { CourseService, CourseItem } from './../../services/course.service';
+import { ErrorSummaryComponent, SummaryError } from './../../components/error-summary';
 import { Subscription } from 'rxjs';
 
 @Component({

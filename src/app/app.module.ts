@@ -13,15 +13,14 @@ import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
 import { AppState, InternalStateType } from './app.service';
-import { LoginComponent } from './login';
-import { CoursesComponent } from './courses';
-import { CourseDetailComponent } from './course-detail';
-import { NoContentComponent } from './no-content';
-import { TimeStampPipePipe } from './time-stamp.pipe';
+import { LoginComponent } from './pages/login';
+import { CoursesComponent } from './pages/courses';
+import { CourseDetailComponent } from './pages/course-detail';
+import { TimeStampPipePipe } from './pipes/time-stamp.pipe';
 import { NameFilterPipe } from './pipes/name-filter.pipe';
-import { LoggedInGuard } from './login/logged-in.guard';
-import { LoginService } from './login/login.service';
-import { CourseService } from './Services/course.service';
+import { LoggedInGuard } from './guards/logged-in.guard';
+import { LoginService } from './services/login.service';
+import { CourseService } from './services/course.service';
 import { ErrorSummaryComponent } from './components/error-summary/error-summary.component';
 import { DateDirective } from './directives/date.directive';
 
@@ -55,7 +54,6 @@ type StoreType = {
     CoursesComponent,
     CourseDetailComponent,
     LoginComponent,
-    NoContentComponent,
     TimeStampPipePipe,
     NameFilterPipe,
     ErrorSummaryComponent,

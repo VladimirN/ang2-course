@@ -1,11 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login';
-import { CoursesComponent } from './courses';
-import { CourseDetailComponent } from './course-detail';
+import { LoginComponent } from './pages/login';
+import { CoursesComponent } from './pages/courses';
+import { CourseDetailComponent } from './pages/course-detail';
 
 import { DataResolver } from './app.resolver';
 
-import { LoggedInGuard } from './login/logged-in.guard';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
 
 export const ROUTES: Routes = [
