@@ -23,6 +23,7 @@ import { LoggedInGuard } from './login/logged-in.guard';
 import { LoginService } from './login/login.service';
 import { CourseService } from './Services/course.service';
 import { ErrorSummaryComponent } from './components/error-summary/error-summary.component';
+import { DateDirective } from './directives/date.directive';
 
 import { StoreModule } from '@ngrx/store';
 import { DBModule } from '@ngrx/db';
@@ -57,7 +58,8 @@ type StoreType = {
     NoContentComponent,
     TimeStampPipePipe,
     NameFilterPipe,
-    ErrorSummaryComponent
+    ErrorSummaryComponent,
+    DateDirective
 ],
   imports: [ // import Angular's modules
     BrowserModule,

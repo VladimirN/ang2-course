@@ -19,19 +19,19 @@ import { Subscription } from 'rxjs';
     <form novalidate *ngIf="item" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
       <div>
         <label> Title </label>
-        <input type="text" name="name" formControlName="name" required />
+        <input type="text" formControlName="name" />
       </div>
       <div>
         <label> Description </label>
-        <input type="text" name="description" formControlName="description" required />
+        <input type="text" formControlName="description" />
       </div>
       <div>
         <label> Date </label>
-        <input type="text" name="createDate" formControlName="createDate" required />
+        <input type="text" formControlName="createDate" only-date />
       </div>
       <div>
         <label> Duration </label>
-        <input type="number" #duratoinInput name="duration" formControlName="duration" required />
+        <input type="number" #duratoinInput formControlName="duration" />
         <label>{{ duratoinInput.value | timeStampPipe }}</label>
       </div>
       <div>
@@ -134,7 +134,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   back($event){
-    this.gotoList();
+    if (this.courseForm.dirty) {
+        if (confirm('Do you want to leave without save?')) {
+            this.gotoList();
+        }
+    }
+    else {
+        this.gotoList();
+    }
     $event.preventDefault();
   }
 
