@@ -12,7 +12,9 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
+import { AppActions } from './app.actions';
 import { AppState, InternalStateType } from './app.service';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { LoginComponent } from './pages/login';
 import { CoursesComponent } from './pages/courses';
 import { CourseDetailComponent } from './pages/course-detail';
@@ -25,14 +27,11 @@ import { ErrorSummaryComponent } from './components/error-summary/error-summary.
 import { DateDirective } from './directives/date.directive';
 
 import { StoreModule } from '@ngrx/store';
-import { DBModule } from '@ngrx/db';
-
-// import { reducer } from './reducers';
-import { schema } from './db';
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
+  AppActions,
   LoginService,
   CourseService,
   LoggedInGuard
@@ -57,7 +56,8 @@ type StoreType = {
     TimeStampPipePipe,
     NameFilterPipe,
     ErrorSummaryComponent,
-    DateDirective
+    DateDirective,
+    AppHeaderComponent
 ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -65,8 +65,7 @@ type StoreType = {
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
-    // StoreModule.provideStore(reducer),
-    DBModule.provideDB(schema),
+    StoreModule.provideStore({}),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
