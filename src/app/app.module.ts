@@ -27,6 +27,7 @@ import { ErrorSummaryComponent } from './components/error-summary/error-summary.
 import { DateDirective } from './directives/date.directive';
 
 import { StoreModule } from '@ngrx/store';
+import { userReducer } from './reducers/user.reducer';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -65,7 +66,7 @@ type StoreType = {
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
-    StoreModule.provideStore({}),
+    StoreModule.provideStore({ user: userReducer }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { Store, Action, combineReducers } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppActions } from '../../app.actions';
+import { AppState } from '../../app.state';
 import { PageComponent } from '../../components/page.component';
-import { loginReducers } from '../../reducers/login.reducer';
+import { userReducer } from '../../reducers/user.reducer';
 import { User } from '../../models/user';
 
 @Component({
@@ -20,8 +21,8 @@ export class AppHeaderComponent extends PageComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private appActions: AppActions,
-    private store: Store<any>) {
-    super(store, loginReducers);
+    private store: Store<AppState>) {
+    super(store, userReducer);
   }
 
   ngOnInit() {
@@ -31,8 +32,8 @@ export class AppHeaderComponent extends PageComponent implements OnInit {
   }
 
   logout(name: string) {
-    this.loginService.logout();
     this.appActions.dispatch(AppActions.LOG_OUT, null);
+    this.loginService.logout();
     this.router.navigate(['/login']);
   }
 }
