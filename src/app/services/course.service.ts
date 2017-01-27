@@ -1,13 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable()
-export class CourseService {
-  private items: CourseItem[] = [
-      new CourseItem(1, 'test name 1', 'desc1', new Date(2017, 1, 7), 200, ['Anton', 'Sveta']),
-      new CourseItem(2, 'test name 2', 'desc2', new Date(2017, 1, 17), 170, ['Alex', 'Dmitry']),
-    ];
+export class CourseService implements OnInit {
 
-  constructor() { }
+  private ITEMS_KEY: string = 'items';
+
+  private items: CourseItem[];
+
+  constructor() {
+    if (!!localStorage.getItem(this.ITEMS_KEY)) {
+      let items: CourseItem[] = JSON.parse(localStorage.getItem(this.ITEMS_KEY));
+      this.items = items;
+    }
+    else {
+       this.items = [
+          new CourseItem(1, 'test name 1', 'desc1', new Date(2017, 1, 7), 200, ['Anton', 'Sveta']),
+          new CourseItem(2, 'test name 2', 'desc2', new Date(2017, 1, 17), 170, ['Alex', 'Dmitry']),
+        ];
+    }
+   }
+
+  ngOnInit(){
+
+  }
 
   getCourseItems(): CourseItem[]{
     return this.items;
@@ -18,13 +33,24 @@ export class CourseService {
   }
 
   updateItem(item: CourseItem) {
+    let oldItem = this.items.find(c => c.id === item.id);
+    let index = this.items.indexOf(oldItem);
+    this.items[index] = item;
+    localStorage.setItem(this.ITEMS_KEY, JSON.stringify(this.items));
+  }
+
+  addItem(item: CourseItem) {
+    let lastId = this.items[this.items.length - 1].id;
+    item.id = ++lastId;
     this.items.push(item);
+    localStorage.setItem(this.ITEMS_KEY, JSON.stringify(this.items));
   }
 
   deleteCourseItem(id: number){
     let item = this.items.find(c => c.id === id);
     let index = this.items.indexOf(item);
     this.items.splice(index, 1);
+    localStorage.setItem(this.ITEMS_KEY, JSON.stringify(this.items));
   }
 }
 

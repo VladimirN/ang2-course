@@ -153,8 +153,12 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       this.formErrors = [];
 
       if (this.courseForm.valid) {
-          let item = Object.assign({}, this.item, this.courseForm.value);
-          this.courseService.updateItem(item);
+          let item = Object.assign(this.item, this.item, this.courseForm.value);
+
+          if (this.item.id === 0)
+            this.courseService.addItem(item);
+          else
+            this.courseService.updateItem(item);
           this.gotoList();
       }
       else {
@@ -162,6 +166,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       }
 
       return false;
+  }
+
+  add(){
+      // this.item.authors
+  }
+
+  delete(){
+
   }
 
   showErrorSummary() {
