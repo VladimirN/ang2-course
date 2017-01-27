@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AppActions } from './app.actions';
 import { AppState, InternalStateType } from './app.service';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { LoginComponent } from './pages/login';
 import { CoursesComponent } from './pages/courses';
 import { CourseDetailComponent } from './pages/course-detail';
@@ -23,6 +24,7 @@ import { NameFilterPipe } from './pipes/name-filter.pipe';
 import { LoggedInGuard } from './guards/logged-in.guard';
 import { LoginService } from './services/login.service';
 import { CourseService } from './services/course.service';
+import { BreadcrumbsService } from './services/breadcrumbs.service';
 import { ErrorSummaryComponent } from './components/error-summary/error-summary.component';
 import { DateDirective } from './directives/date.directive';
 
@@ -35,7 +37,8 @@ const APP_PROVIDERS = [
   AppActions,
   LoginService,
   CourseService,
-  LoggedInGuard
+  LoggedInGuard,
+  BreadcrumbsService
 ];
 
 type StoreType = {
@@ -58,7 +61,8 @@ type StoreType = {
     NameFilterPipe,
     ErrorSummaryComponent,
     DateDirective,
-    AppHeaderComponent
+    AppHeaderComponent,
+    BreadcrumbsComponent
 ],
   imports: [ // import Angular's modules
     BrowserModule,

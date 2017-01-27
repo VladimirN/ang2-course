@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
   ],
   template: `
     <app-header></app-header>
+    <breadcrumbs></breadcrumbs>
+
     <main>
       <router-outlet></router-outlet>
     </main>

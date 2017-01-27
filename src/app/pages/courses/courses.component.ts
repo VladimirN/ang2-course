@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService, CourseItem } from './../../services/course.service';
 import { NameFilterPipe } from './../../pipes/name-filter.pipe';
+import { BreadcrumbsService, BreadcrumbsItem } from '../../services/breadcrumbs.service';
 
 @Component({
   selector: 'courses',
@@ -17,10 +18,12 @@ export class CoursesComponent {
   constructor(
     private router: Router,
     private courseService: CourseService,
-    private filterPipe: NameFilterPipe) {
+    private filterPipe: NameFilterPipe,
+    private breadcrumbsService: BreadcrumbsService) {
   }
 
   ngOnInit() {
+    this.breadcrumbsService.addBreadcrumbs(new BreadcrumbsItem('Courses list', '#/courses'));
     this.items = this.courseService.getCourseItems();
     this.filteredItems = this.items;
   }

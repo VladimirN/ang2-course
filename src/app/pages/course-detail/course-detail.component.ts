@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { CourseService, CourseItem } from './../../services/course.service';
 import { ErrorSummaryComponent, SummaryError } from './../../components/error-summary';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsService, BreadcrumbsItem } from '../../services/breadcrumbs.service';
 
 @Component({
   selector: 'course-detail',
@@ -19,7 +20,7 @@ import { Subscription } from 'rxjs';
     <form novalidate *ngIf="item" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
       <div>
         <label> Title </label>
-        <input type="text" formControlName="name" />
+        <input type="text" #titleInput formControlName="name" (keyup)="changeBreadcrums(titleInput.value)" />
       </div>
       <div>
         <label> Description </label>
@@ -71,10 +72,12 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private breadcrumbsService: BreadcrumbsService) {
   }
 
   ngOnInit(){
+
     this.courseForm = this.fb.group({});
 
     this.sub = this.route.params
@@ -89,11 +92,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
             this.item = this.courseService.getCourseItem(itemId);
           }
           this.initializeForm();
+          this.breadcrumbsService.addBreadcrumbs(new BreadcrumbsItem('Courses details ' + this.item.name));
         }
       );
   }
 
   ngOnDestroy() {
+    this.breadcrumbsService.clearBreadcrumbs();
     this.sub.unsubscribe();
   }
 
@@ -182,6 +187,10 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     let index = this.item.authors.indexOf(value);
     this.item.authors.splice(index, 1);
     this.allAuthors.push(value);
+  }
+
+  changeBreadcrums (value: string) {
+    this.breadcrumbsService.updateLastBreadcrumbs(new BreadcrumbsItem('Courses details ' + value));
   }
 
   showErrorSummary() {
