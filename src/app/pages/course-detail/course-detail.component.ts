@@ -36,19 +36,19 @@ import { Subscription } from 'rxjs';
       </div>
       <div>
         <label> Authors </label>
-        <select size="5">
-          <option *ngFor="let author of allAuthors">{{author}}</option>
+        <select #allAuthorsSelect size="5">
+          <option *ngFor="let author of allAuthors" [ngValue]="author">{{author}}</option>
         </select>
         <div style="display: inline-block;">
           <div>
-            <button (click)="add()"> -> </button>
+            <button type="button" (click)="add(allAuthorsSelect.value)"> -> </button>
           </div>
           <div>
-            <button (click)="delete()"> <- </button>
+            <button type="button" (click)="delete(itemAuthorsSelect.value)"> <- </button>
           </div>
         </div>
-        <select size="5">
-          <option *ngFor="let author of item.authors">{{author}}</option>
+        <select #itemAuthorsSelect size="5">
+          <option *ngFor="let author of item.authors" [ngValue]="author">{{author}}</option>
         </select>
       </div>
 
@@ -93,7 +93,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
@@ -168,12 +168,20 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       return false;
   }
 
-  add(){
-      // this.item.authors
+  add(value: string) {
+      if (value === '') return;
+
+      this.item.authors.push(value);
+      let index = this.allAuthors.indexOf(value);
+      this.allAuthors.splice(index, 1);
   }
 
-  delete(){
+  delete(value: string) {
+    if (value === '') return;
 
+    let index = this.item.authors.indexOf(value);
+    this.item.authors.splice(index, 1);
+    this.allAuthors.push(value);
   }
 
   showErrorSummary() {

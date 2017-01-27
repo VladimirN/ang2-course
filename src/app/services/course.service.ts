@@ -1,7 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
-export class CourseService implements OnInit {
+export class CourseService {
 
   private ITEMS_KEY: string = 'items';
 
@@ -20,10 +20,6 @@ export class CourseService implements OnInit {
     }
    }
 
-  ngOnInit(){
-
-  }
-
   getCourseItems(): CourseItem[]{
     return this.items;
   }
@@ -33,7 +29,7 @@ export class CourseService implements OnInit {
   }
 
   updateItem(item: CourseItem) {
-    let oldItem = this.items.find(c => c.id === item.id);
+    let oldItem = this.getCourseItem(item.id);
     let index = this.items.indexOf(oldItem);
     this.items[index] = item;
     localStorage.setItem(this.ITEMS_KEY, JSON.stringify(this.items));
@@ -47,7 +43,7 @@ export class CourseService implements OnInit {
   }
 
   deleteCourseItem(id: number){
-    let item = this.items.find(c => c.id === id);
+    let item = this.getCourseItem(id);
     let index = this.items.indexOf(item);
     this.items.splice(index, 1);
     localStorage.setItem(this.ITEMS_KEY, JSON.stringify(this.items));
