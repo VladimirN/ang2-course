@@ -1,22 +1,28 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService, CourseItem } from './../../services/course.service';
+import { NameFilterPipe } from './../../pipes/name-filter.pipe';
 
 @Component({
   selector: 'courses',
   styles: [ './courses.component.css' ],
   templateUrl: './courses.component.html',
-  providers: [CourseService]
+  providers: [CourseService, NameFilterPipe]
 })
 export class CoursesComponent {
   items: CourseItem[] = [];
+  filteredItems: CourseItem[];
   courseNameFilter: string = '';
 
-  constructor(private router: Router, private courseService: CourseService) {
+  constructor(
+    private router: Router,
+    private courseService: CourseService,
+    private filterPipe: NameFilterPipe) {
   }
 
   ngOnInit() {
     this.items = this.courseService.getCourseItems();
+    this.filteredItems = this.items;
   }
 
   addCourse() {
@@ -31,5 +37,7 @@ export class CoursesComponent {
     this.courseService.deleteCourseItem(id);
   }
 
-
+  filter(filterValue: string){
+    this.filteredItems = this.filterPipe.transform(this.items, filterValue);
+  }
 }

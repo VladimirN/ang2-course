@@ -3,14 +3,14 @@
         <h2>Courses</h2>
 
         <div class="find">
-          <input type="text" #nameInputFilter/>
+          <input type="text" #nameInputFilter (keyup.enter)="filter(nameInputFilter.value)"/>
           <button class="btn" (click)="filter(nameInputFilter.value)">Filter</button>
         </div>
 
         <button class="btn btn-primary" (click)="addCourse()">Add</button>
 
         <div class="items">
-          <div class="item" *ngFor="let item of items | nameFilter:courseNameFilter">
+          <div class="item" *ngFor="let item of filteredItems">
             <div>{{item.name}}</div>
             <div>{{item.createDate | date: 'MM.dd.yyyy'}}</div>
             <div>{{item.duration | timeStampPipe}}</div>
