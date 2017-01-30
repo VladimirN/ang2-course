@@ -1,7 +1,7 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
@@ -28,6 +28,9 @@ import { BreadcrumbsService } from './services/breadcrumbs.service';
 import { ErrorSummaryComponent } from './components/error-summary/error-summary.component';
 import { DateDirective } from './directives/date.directive';
 
+import { ErrorNotifierService } from './services/error-notifier.service';
+import { CustomHttp } from './services/custom-http';
+
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './reducers/user.reducer';
 
@@ -38,7 +41,14 @@ const APP_PROVIDERS = [
   LoginService,
   CourseService,
   LoggedInGuard,
-  BreadcrumbsService
+  BreadcrumbsService,
+  ErrorNotifierService,
+  { provide: Http,
+    useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, errorNotifier: ErrorNotifierService) => {
+      return new CustomHttp(backend, defaultOptions, errorNotifier);
+    },
+    deps: [ XHRBackend, RequestOptions, ErrorNotifierService ]
+  },
 ];
 
 type StoreType = {

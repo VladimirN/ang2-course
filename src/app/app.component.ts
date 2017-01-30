@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LoginService } from './services/login.service';
+import { ErrorNotifierService } from './services/error-notifier.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +17,9 @@ import { Router } from '@angular/router';
       <router-outlet></router-outlet>
     </main>
 
+
+    <div class="error-global" *ngIf="error">{{ error }}</div>
+
     <footer>
     </footer>
   `
@@ -23,8 +27,17 @@ import { Router } from '@angular/router';
 export class AppComponent {
   public userName: string;
   public isHidden: boolean;
+  private error: any;
 
-  constructor(private loginService: LoginService, private router: Router) {
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private errorNotifier: ErrorNotifierService) {
+      this.errorNotifier.onError(err => {
+        this.error = err;
+        setTimeout(() => this.error = null, 10000);
+        console.log(err);
+      });
   }
 
   logout(name: string) {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class CourseService {
@@ -7,7 +8,7 @@ export class CourseService {
 
   private items: CourseItem[];
 
-  constructor() {
+  constructor(private http: Http) {
     if (!!localStorage.getItem(this.ITEMS_KEY)) {
       let items: CourseItem[] = JSON.parse(localStorage.getItem(this.ITEMS_KEY));
       this.items = items;
@@ -21,6 +22,7 @@ export class CourseService {
    }
 
   getCourseItems(): CourseItem[]{
+    this.http.get('http://www.tes1t.com/').subscribe(data => data.json()); // test for global http error handling
     return this.items;
   }
 
