@@ -14,6 +14,6 @@ export class NameFilterPipe implements PipeTransform {
 }
 
 
-interface NamedItem {
+export interface NamedItem {
     name: string;
 }

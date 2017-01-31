@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'breadcrumbs',
-  templateUrl: `
+  template: `
         Breadcrumbs:
         <span *ngFor="let item of items$ | async">
           <div *ngIf="item.link">
@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
           </div>
           <div *ngIf="!item.link">
             {{item.title}}
-          </div> >
+          </div>
         </span>
     `
 })

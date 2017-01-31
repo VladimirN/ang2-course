@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class BreadcrumbsService {
-    private _items: BreadcrumbsItem[] = [];
     public items$: BehaviorSubject<BreadcrumbsItem[]> = new BehaviorSubject<BreadcrumbsItem[]>(this._items);
+    private _items: BreadcrumbsItem[] = [];
 
     addBreadcrumbs(item: BreadcrumbsItem) {
         this._items = [...this._items, item];

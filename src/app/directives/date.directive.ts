@@ -8,8 +8,7 @@ export class DateDirective {
   }
 
   @HostListener('keypress', ['$event']) onKeyPress($event) {
-      let key = $event.keyCode || $event.which;
-      key = String.fromCharCode(key);
+      let key = $event.key || String.fromCharCode($event.which);
       let length = this.el.nativeElement.value.length;
       if (length === 2 || length === 5) {
         if (key !== '.') {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './../../services/login.service';
 import { Router } from '@angular/router';
 import { Store, Action, combineReducers } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
 import { AppActions } from '../../app.actions';
 import { AppState } from '../../app.state';
 import { PageComponent } from '../../components/page.component';
@@ -11,8 +10,11 @@ import { User } from '../../models/user';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './app-header.component.html',
-  styleUrls: ['./app-header.component.css']
+  template: `<div *ngIf="user">
+  Hi, {{user?.login}}
+  <button type="button" class="btn" (click)="logout()">LogOut</button>
+</div>
+`
 })
 export class AppHeaderComponent extends PageComponent implements OnInit {
   public user: User;
