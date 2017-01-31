@@ -11,7 +11,7 @@ import { User } from '../../models/user';
 @Component({
   selector: 'app-header',
   template: `<div *ngIf="user">
-  Hi, {{user?.login}}
+  Hi, <span class="user-span">{{user?.login}}</span>
   <button type="button" class="btn" (click)="logout()">LogOut</button>
 </div>
 `
